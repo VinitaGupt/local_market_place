@@ -60,15 +60,15 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="primaryPhone" class="form-label">फ़ोन नंबर</label>
-                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $listing->primary_phone) }}" placeholder="Enter primary phone">
+                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $user->phone) }}" placeholder="Enter primary phone">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="primaryContact" class="form-label">संपर्क नाम</label>
-                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $listing->primary_contact_name) }}"placeholder="Enter primary contact name">
+                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $user->name) }}"placeholder="Enter primary contact name">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="primaryEmail" class="form-label">ईमेल</label>
-                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $listing->primary_contact_email) }}" placeholder="Enter primary email">
+                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $user->email) }}" placeholder="Enter primary email">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="businessType" class="form-label">व्यवसाय/कंपनी कानूनी प्रकार *</label>
@@ -209,7 +209,7 @@
                 </div>
             
                 <!-- Add New Day Button -->
-                <button type="button" id="add-day-btn">+ Add Day</button>
+                {{-- <button type="button" id="add-day-btn">+ Add Day</button> --}}
             </div>            
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
@@ -228,24 +228,43 @@
                 </div>
             </div>
             <br>
-            <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
+            <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
                 <h5 style="margin-bottom: 15px;">सोशल मीडिया लिंक</h5>
                 <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
-                <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <select id="social_media" name="socialId" required style="flex: 1; padding: 8px;">
-                    <option selected>Select location</option>
-                            @foreach($social_media as $social)
-                            <option value="{{ $social->id }}" 
-                                {{ (old('advertising_medium_id', $listing->social_id) == $social->id) ? 'selected' : '' }}>
-                                {{ $social->name }}
-                    </option>
-                            @endforeach
-                    </select>
-                    <input type="text" id="description" name="socialDescription" placeholder="Enter your link or details" style="flex: 2; padding: 8px;">
-                    {{-- <button type="button" id="addSocialMedia" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer;">
-                        +
-                    </button> --}}
+            
+                <div id="social-media-container">
+                    @if(!empty($social_media_data) && count($social_media_data) > 0)
+                        @foreach($social_media_data as $data)
+                            <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <select name="socialId[]" style="flex: 1; padding: 8px;">
+                                    <option value="">स्थान चुनें</option>
+                                    @foreach($social_media as $social)
+                                        <option value="{{ $social->id }}" 
+                                            @if(isset($data->social_id) && $data->social_id == $social->id) selected @endif>
+                                            {{ $social->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input type="text" name="socialDescription[]" value="{{ $data->description ?? '' }}" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                                <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                            </div>
+                    @endforeach
+                    @else
+                        <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <select name="socialId[]"  style="flex: 1; padding: 8px;">
+                                <option value="">स्थान चुनें</option>
+                                @foreach($social_media as $social)
+                                    <option value="{{ $social->id }}">{{ $social->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" name="socialDescription[]" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                            <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                        </div>
+                    @endif
                 </div>
+        
+                <!-- Add Button -->
+                {{-- <button type="button" id="addSocialMedia" style="padding: 10px; background-color: green; color: white; border: none; cursor: pointer; margin-top: 10px;">+</button> --}}
             </div>
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
@@ -439,6 +458,71 @@ document.addEventListener('click', function(event) {
             item.querySelector('.dropdown-icon').classList.remove('show');
         });
     }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // Add new social media row
+    document.getElementById("addSocialMedia").addEventListener("click", function() {
+        let container = document.getElementById("social-media-container");
+        console.log(container);
+        let newRow = document.createElement("div");
+        newRow.classList.add("social-media-row");
+        newRow.style.display = "flex";
+        newRow.style.alignItems = "center";
+        newRow.style.gap = "10px";
+        newRow.style.marginBottom = "10px";
+
+        let select = document.createElement("select");
+        select.name = "socialId[]";
+        // select.required = true;
+        select.style.flex = "1";
+        select.style.padding = "8px";
+
+        let defaultOption = document.createElement("option");
+        defaultOption.text = "स्थान चुनें";
+        defaultOption.value = "";
+        select.appendChild(defaultOption);
+
+        let socialMediaData = @json($social_media); // Convert Blade variable to JS array
+
+        socialMediaData.forEach(function(social) {
+            let option = document.createElement("option");
+            option.value = social.id;
+            option.text = social.name;
+            select.appendChild(option);
+        });
+
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "socialDescription[]";
+        input.placeholder = "अपना लिंक या विवरण दर्ज करें";
+        input.style.flex = "2";
+        input.style.padding = "8px";
+
+        let removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.textContent = "-";
+        removeButton.style.padding = "10px";
+        removeButton.style.backgroundColor = "red";
+        removeButton.style.color = "white";
+        removeButton.style.border = "none";
+        removeButton.style.cursor = "pointer";
+
+        removeButton.addEventListener("click", function() {
+            newRow.remove();
+        });
+
+        newRow.appendChild(select);
+        newRow.appendChild(input);
+        newRow.appendChild(removeButton);
+        container.appendChild(newRow);
+    });
+
+    // Attach event listener to remove existing social media rows
+    document.querySelectorAll(".removeSocialMedia").forEach(button => {
+        button.addEventListener("click", function() {
+            this.parentElement.remove();
+        });
+    });
 });
 
 </script>

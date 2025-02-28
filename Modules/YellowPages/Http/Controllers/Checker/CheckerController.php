@@ -11,6 +11,7 @@ use App\Models\UserPurchasePlan;
 use App\Models\BusinessHour;
 use App\Models\Category;
 use App\Models\DynamicFeild;
+use App\Models\BusinessSocialMedia;
 use Exception;
 use App\Models\City;
 use App\Models\User;
@@ -45,6 +46,7 @@ class CheckerController extends Controller
     {
         try {
             $listing = BusinessListing::findOrFail($id);
+            $user = User::where('id',$listing->user_id)->first();
             $listinghours = BusinessHour::where('business_id', $listing->id)->get();
             $categories = Category::where('is_active', 1)->get();
             $cities = City::where('is_active', 1)->get();
@@ -53,16 +55,16 @@ class CheckerController extends Controller
             $monthly_turnovers = MonthlyTurnover::all();
             $monthly_advertising_mediums = AdvertisingMedium::all();
             $monthly_advertising_prices = AdvertisingPrice::all();
-            $social_media = SocialMedia::all();
-    
-            // Check and get the correct image URL
-            $listing->logo_url = $listing->logo ? Storage::url($listing->logo) : null;
-            $listing->feature_img_url = $listing->feature_img ? Storage::url($listing->feature_img) : null;
+            $social_media = DynamicFeild::on('yp')->get();  
+            $social_media_data = BusinessSocialMedia::where('listing_id', $listing->id)
+            ->whereIn('social_id', $social_media->pluck('id'))
+            ->get();
             $listing->business_img_url = $listing->business_img ? Storage::url($listing->business_img) : null;
     
             return view('yellowpages::admin.checker-listing-approve', compact(
                 'listing',
                 'cities',
+                'user',
                 'categories',
                 'company_legal_types',
                 'number_of_employees',
@@ -70,6 +72,7 @@ class CheckerController extends Controller
                 'monthly_advertising_mediums',
                 'monthly_advertising_prices',
                 'social_media',
+                'social_media_data',
                 'listinghours',
             ));
     

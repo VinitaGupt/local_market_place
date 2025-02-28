@@ -89,7 +89,7 @@ public function address()
 
 public function user()
     {
-        return $this->belongsTo(User::class,foreignKey: 'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 
 }

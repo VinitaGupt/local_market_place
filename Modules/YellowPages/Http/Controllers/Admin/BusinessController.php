@@ -15,6 +15,7 @@ use App\Models\MonthlyTurnover;
 use App\Models\AdvertisingMedium;
 use App\Models\AdvertisingPrice;
 use App\Models\SocialMedia;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,8 +26,11 @@ class BusinessController extends Controller
     ##------------------------- businessListing function ---------------------##
     public function businessListing(Request $request) {
         try {
-            $business_listing = BusinessListing::all();
-            return view('yellowpages::admin.business-listing', compact('business_listing'));
+            $business_listing = BusinessListing::all(); // Renamed for clarity
+            $users = User::whereIn('id', $business_listing->pluck('user_id'))->get()
+                    ->keyBy('id');
+
+            return view('yellowpages::admin.business-listing', compact('business_listing','users'));
         } catch (\Exception $e) {
             return redirect()->route('admin.dashboard')->withErrors(['error' => 'An error occurred while fetching the business listings: ' ]);
         }
@@ -39,6 +43,7 @@ class BusinessController extends Controller
         try {
             // Retrieve data for the form
             $listing = BusinessListing::findOrFail($id);
+            $user=User::where('id',$listing->user_id)->first();
             $listinghours = BusinessHour::where('business_id', $listing->id)->get();
             $categories = Category::where('is_active', 1)->get();
             $cities = City::where('is_active', 1)->get();
@@ -52,6 +57,7 @@ class BusinessController extends Controller
             return view('yellowpages::admin.business-listing-edit', compact(
                 'listing',
                 'cities',
+                'user',
                 'categories',
                 'company_legal_types',
                 'number_of_employees',
@@ -75,7 +81,7 @@ class BusinessController extends Controller
     {
         try {
             $validated = $request->validate([
-                // Basic fields validation
+              
                 'location' => 'required|exists:yp.cities,id',
                 'listingTitle' => 'required|string|max:255',
                 'businessName' => 'required|string|max:255',
@@ -99,8 +105,6 @@ class BusinessController extends Controller
                 'pincode' => 'nullable|string',
                 'faq' => 'nullable|string',
                 'answer' => 'nullable|string',
-    
-                // Business hours validation
                 'day' => 'required|array',
                 'open_time' => 'required|array',
                 'close_time' => 'required|array',
@@ -110,7 +114,6 @@ class BusinessController extends Controller
                 'close_time_2' => 'nullable|array',
             ]);
     
-            // File upload handling
             $imagePath = null;
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('yellowpages/business');
