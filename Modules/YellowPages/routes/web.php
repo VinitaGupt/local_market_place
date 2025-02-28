@@ -64,7 +64,6 @@ Route::group(['prefix' => 'yp', 'middleware' => 'language'], function () {
     Route::get('/vCard/logout', [VCardController::class, 'logout'])->name('vCard.logout');
     ##------------------------- END ---------------------##
 
-    Route::get('/myweb/{slug}', [CreateVCardController::class, 'view'])->name('vCard.view');
    
     Route::get('/scan/myweb/{slug}', [CreateVCardController::class, 'vcardScan'])->name('vCard.scan');
     Route::get('/share/myweb/{slug}', [CreateVCardController::class, 'vcardShare'])->name('vCard.share');
@@ -216,6 +215,9 @@ Route::group(['prefix' => 'yp', 'middleware' => 'language'], function () {
     Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    End yellowPages Checker Side   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    Route::get('/{city_arr}/{slug}', [CreateVCardController::class, 'view'])->name('vCard.view');
+
     Route::get('/{city_arr}/{slug}', [CreateVCardController::class, 'cardView'])->name('cardView.view');
 
    Route::get('{city_name}', [ListingController::class, 'showByCity'])->name('city.show');

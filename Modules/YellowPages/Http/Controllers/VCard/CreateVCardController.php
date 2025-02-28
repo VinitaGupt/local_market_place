@@ -276,7 +276,7 @@ class CreateVCardController extends Controller
     ##------------------------- END ---------------------##
 
     ##------------------------- VCard view ---------------------##
-    public function view($slug)
+    public function view($city_arr,$slug)
     {
         $vcard = VCard::where('slug', $slug)
             ->orderBy('id', 'desc')
@@ -290,16 +290,16 @@ class CreateVCardController extends Controller
         // Check if VCard exists and is approved
         if (!$vcard) {
             $message = 'VCard not found.';
-            return view('yellowpages::Vcard.CardView', compact('user', 'address', 'message','category'));
+            return view('yellowpages::Vcard.CardView', compact('user', 'address', 'message','category','city_arr'));
         }
     
         // If VCard is not approved
         if ($vcard->is_active != 1) {
             $message = 'आपका कार्ड स्वीकृति की प्रक्रिया में है।';
-            return view('yellowpages::Vcard.CardView', compact('user', 'message', 'vcard','category'));
+            return view('yellowpages::Vcard.CardView', compact('user', 'message', 'vcard','category','city_arr'));
         }    
         
-        return view('yellowpages::Vcard.CardView', compact('vcard', 'user', 'category', 'dynamicFields'));
+        return view('yellowpages::Vcard.CardView', compact('vcard', 'user', 'category', 'dynamicFields','city_arr'));
     }
     
     ##------------------------- END ---------------------##
@@ -375,7 +375,7 @@ class CreateVCardController extends Controller
 
     ##------------------------- VCard list ------------------ ---##
     public function VcardList(Request $request) {
-        try {
+     try {
             $userId = Auth::id();
             $user = User::find($userId);
             $Vcard_list = VCard::where('user_id', $userId)->get();    

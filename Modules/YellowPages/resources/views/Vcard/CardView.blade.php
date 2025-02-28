@@ -144,10 +144,13 @@
        </button>
       @endif      
 
+      @auth
       <a href="{{ route('vCard.business-listing-register')}}"
-        class="flex items-center justify-center space-x-2 p-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 w-full rounded-lg transition-colors">
-        <i class="bx bx-link-external"></i><span>व्यवसाय पंजीकृत करें</span>
+         class="flex items-center justify-center space-x-2 p-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 w-full rounded-lg transition-colors">
+         <i class="bx bx-link-external"></i><span>व्यवसाय पंजीकृत करें</span>
       </a>
+      @endauth
+  
     </div>
 
     <!-- Share Function -->
@@ -156,7 +159,7 @@
         const shareData = {
           title: "{{ $user->name ?? 'VCard' }}",
           text: " ",
-          url: "{{ route('vCard.share', ['slug' => $vcard->slug]) }}"
+          url: "{{ route('vCard.view', ['city_arr'=>$city_arr,'slug' => $vcard->slug]) }}"
         };
 
         // Check if the browser supports the Web Share API

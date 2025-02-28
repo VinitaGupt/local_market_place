@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="w-40 h-40 bg-white p-3 rounded-xl shadow-lg transform hover:rotate-3 transition-transform duration-300">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ route('vCard.view', ['slug' => $vcard->slug]) }}" alt="QR Code" class="w-full h-full">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ route('vCard.view', ['city_arr'=>$user->address->city->city_arr,'slug' => $vcard->slug]) }}" alt="QR Code" class="w-full h-full">
                     </div>                    
                 </div>
             </div>
