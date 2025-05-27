@@ -59,32 +59,16 @@
                     <input type="text" id="businessName" name="businessName" class="form-control" value="{{ old('business_name', $listing->business_name) }}" placeholder="Enter business name">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="businessAddress" class="form-label">व्यवसाय/कंपनी का पता</label>
-                    <input type="text" id="businessAddress" name="businessAddress" class="form-control" value="{{ old('business_address', $listing->business_address) }}" placeholder="Enter business address">
+                    <label for="primaryPhone" class="form-label">फ़ोन नंबर</label>
+                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $user->phone) }}" placeholder="Enter primary phone">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="primaryPhone" class="form-label">प्राथमिक फ़ोन नंबर</label>
-                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $listing->primary_phone) }}" placeholder="Enter primary phone">
+                    <label for="primaryContact" class="form-label">संपर्क नाम</label>
+                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $user->name) }}"placeholder="Enter primary contact name">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="secondaryPhone" class="form-label">द्वितीय फ़ोन नंबर</label>
-                    <input type="text" id="secondaryPhone" name="secondary_phone" class="form-control" value="{{ old('secondary_phone', $listing->secondary_phone) }}" placeholder="Enter secondary phone">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="primaryContact" class="form-label">प्राथमिक संपर्क नाम</label>
-                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $listing->primary_contact_name) }}"placeholder="Enter primary contact name">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="primaryEmail" class="form-label">प्राथमिक संपर्क ईमेल</label>
-                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $listing->primary_contact_email) }}" placeholder="Enter primary email">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="secondaryContact" class="form-label">द्वितीयक संपर्क नाम</label>
-                    <input type="text" id="secondaryContact" name="secondaryContactName" class="form-control" value="{{ old('secondary_contact_name', $listing->secondary_contact_name) }}" placeholder="Enter secondary contact name">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="secondaryEmail" class="form-label">द्वितीयक संपर्क ईमेल</label>
-                    <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control"  value="{{ old('secondary_contact_email', $listing->secondary_contact_email) }}" placeholder="Enter secondary email">
+                    <label for="primaryEmail" class="form-label">ईमेल</label>
+                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $user->email) }}" placeholder="Enter primary email">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="businessType" class="form-label">व्यवसाय/कंपनी कानूनी प्रकार *</label>
@@ -147,18 +131,6 @@
                     </select>
                 </div>
             </div>
-        <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
-            <h5 style="margin-bottom: 15px;">पता विवरण</h5>
-        <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
-            <div style="display: flex; gap: 20px;">
-                <!-- Pin Code Field -->
-                <div style="flex: 1;">
-                    <label for="pincode" class="form-label">पिन कोड</label>
-                    <input type="text" id="pincode" name="pincode" class="form-control" value="{{ old('primary_contact_email', $listing->pincode) }}" placeholder="Enter Pin Code">
-                </div>
-            </div>
-        </div>
-        <br>
         <br>
         <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
             <h5 style="margin-bottom: 15px;">श्रेणी और सेवाएँ</h5>
@@ -186,11 +158,7 @@
                 <label for="description">विवरण</label>
                 <textarea id="description" name="description" rows="4" placeholder="Enter description here..." style="width: 100%;">{{ old('description', $listing->description) }}</textarea>
             </div>
-            
-            <div style="margin-top: 15px;">
-                <label for="tags_keywords">टैग या कीवर्ड (अल्पविराम से अलग)</label>
-                <textarea id="tags_keywords" name="tags_keywords" rows="4" placeholder="Enter Tags or Keywords (Comma Separated)" style="width: 100%;">{{ old('tags_keywords', $listing->tags_keywords) }}</textarea>
-            </div>            
+                     
         </div>
             <br>
             <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd; font-family: Arial, sans-serif;">
@@ -199,42 +167,56 @@
             
                 <!-- Schedule Container -->
                 <div id="schedule-container">
-                    @foreach($listinghours as $hour)
-                        <div class="day-schedule">
-                            <select name="day[]" style="padding: 5px; border: 1px solid #ccc; border-radius: 3px; width: 120px;">
-                                <option value="">-- दिन चुनें --</option>
-                                <option value="monday" {{ $hour->day == 'monday' ? 'selected' : '' }}>सोमवार</option>
-                                <option value="tuesday" {{ $hour->day == 'tuesday' ? 'selected' : '' }}>मंगलवार</option>
-                                <option value="wednesday" {{ $hour->day == 'wednesday' ? 'selected' : '' }}>बुधवार</option>
-                                <option value="thursday" {{ $hour->day == 'thursday' ? 'selected' : '' }}>गुरुवार</option>
-                                <option value="friday" {{ $hour->day == 'friday' ? 'selected' : '' }}>शुक्रवार</option>
-                                <option value="saturday" {{ $hour->day == 'saturday' ? 'चयनित' : '' }}>शनिवार</option>
-                                <option value="sunday" {{ $hour->day == 'sunday' ? 'चयनित' : '' }}>रविवार</option>
-                            </select>
-                            <input type="time" name="open_time[]" value="{{ $hour->open_time }}" style="padding: 5px; border: 1px solid #ccc; border-radius: 3px;">
-                            <label style="font-weight: bold;">to</label>
-                            <input type="time" name="close_time[]" value="{{ $hour->close_time }}" style="padding: 5px; border: 1px solid #ccc; border-radius: 3px;">
+                    @if($listinghours->isNotEmpty())
+                        @foreach($listinghours as $hour)
+                            <div class="day-schedule">
+                                <select name="day[]" class="day-select">
+                                    <option value="">-- दिन चुनें --</option>
+                                    <option value="monday" {{ $hour->day == 'monday' ? 'selected' : '' }}>सोमवार</option>
+                                    <option value="tuesday" {{ $hour->day == 'tuesday' ? 'selected' : '' }}>मंगलवार</option>
+                                    <option value="wednesday" {{ $hour->day == 'wednesday' ? 'selected' : '' }}>बुधवार</option>
+                                    <option value="thursday" {{ $hour->day == 'thursday' ? 'selected' : '' }}>गुरुवार</option>
+                                    <option value="friday" {{ $hour->day == 'friday' ? 'selected' : '' }}>शुक्रवार</option>
+                                    <option value="saturday" {{ $hour->day == 'saturday' ? 'selected' : '' }}>शनिवार</option>
+                                    <option value="sunday" {{ $hour->day == 'sunday' ? 'selected' : '' }}>रविवार</option>
+                                </select>
             
-                            <label>
-                                <input type="checkbox" name="is_24_hours[]" {{ $hour->is_24_hours ? 'checked' : '' }} style="cursor: pointer;"> 24 घंटे
-
-                            </label>
+                                <input type="time" name="open_time[]" class="time-input" value="{{ $hour->open_time }}">
+                                <label>to</label>
+                                <input type="time" name="close_time[]" class="time-input" value="{{ $hour->close_time }}">
             
-                            <button type="button" class="remove-day-btn" style="background: none; border: none; color: red; font-size: 16px; cursor: pointer;">&#x2716;</button>
-                        </div>
-                    @endforeach
+                                {{-- <label>
+                                    <input type="checkbox" name="is_24_hours[]" class="is-24-hours" value="0" {{ $hour->is_24_hours ? 'checked' : '' }}> 24 घंटे
+                                </label> --}}
+            
+                                <label>
+                                    <input type="checkbox" class="add-2nd-slot" {{ $hour->open_time_2 ? 'checked' : '' }}> दूसरा स्लॉट जोड़ें
+                                </label>
+            
+                                <button type="button" class="remove-day-btn">&#x2716;</button>
+            
+                                <!-- Second Time Slot -->
+                                <div class="second-time-slot" style="display: {{ $hour->open_time_2 ? 'block' : 'none' }}; margin-top: 10px;">
+                                    <input type="time" name="open_time_2[]" class="time-input" value="{{ $hour->open_time_2 }}">
+                                    <label>to</label>
+                                    <input type="time" name="close_time_2[]" class="time-input" value="{{ $hour->close_time_2 }}">
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>कोई व्यावसायिक घंटे सेट नहीं हैं।</p>
+                    @endif
                 </div>
             
                 <!-- Add New Day Button -->
-                <button type="button" id="add-day-btn" style="margin-top: 10px; padding: 8px 12px; background: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 14px;">+ Add Day</button>
-            </div>
-            
+                {{-- <button type="button" id="add-day-btn">+ Add Day</button> --}}
+            </div>            
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
-                <h5 style="margin-bottom: 15px;">पते की जानकारी</h5>
+                <h5 style="margin-bottom: 15px;">व्यवसाय/कंपनी का पता</h5>
                 <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
                 <div style="margin-bottom: 10px;">
-                    <label for="street_address">Full Address:</label>
+                    <label for="street_address">व्यवसाय/कंपनी का पता:</label>
                     <input type="text" id="street_address" name="fullAddress"  value="{{ old('primary_contact_email', $listing->full_address) }}" placeholder="123 Main St" style="width: 100%; padding: 8px;">
                 </div>
                
@@ -244,34 +226,45 @@
                     <label for="website">वेबसाइट:</label>
                     <input type="url" id="website" name="website" value="{{ old('primary_contact_email', $listing->website) }}" placeholder="https://example.com" style="width: 100%; padding: 8px;">
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <label for="phone">फ़ोन:</label>
-                    <input type="tel" id="phone" name="phone" value="{{ old('primary_contact_email', $listing->phone) }}" placeholder="+1 234 567 8900" style="width: 100%; padding: 8px;">
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <label for="whatsapp">व्हाट्सएप:</label>
-                    <input type="tel" id="whatsapp" name="whatsapp" value="{{ old('primary_contact_email', $listing->whatsapp) }}"  placeholder="+1 234 567 8900" style="width: 100%; padding: 8px;">
-                </div>
             </div>
             <br>
-            <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
+            <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
                 <h5 style="margin-bottom: 15px;">सोशल मीडिया लिंक</h5>
                 <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
-                <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <select id="social_media" name="socialId" required style="flex: 1; padding: 8px;">
-                    <option selected>Select location</option>
-                            @foreach($social_media as $social)
-                            <option value="{{ $social->id }}" 
-                                {{ (old('advertising_medium_id', $listing->social_id) == $social->id) ? 'selected' : '' }}>
-                                {{ $social->name }}
-                    </option>
-                            @endforeach
-                    </select>
-                    <input type="text" id="description" name="socialDescription" placeholder="Enter your link or details" style="flex: 2; padding: 8px;">
-                    {{-- <button type="button" id="addSocialMedia" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer;">
-                        +
-                    </button> --}}
+            
+                <div id="social-media-container">
+                    @if(!empty($social_media_data) && count($social_media_data) > 0)
+                        @foreach($social_media_data as $data)
+                            <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <select name="socialId[]" style="flex: 1; padding: 8px;">
+                                    <option value="">स्थान चुनें</option>
+                                    @foreach($social_media as $social)
+                                        <option value="{{ $social->id }}" 
+                                            @if(isset($data->social_id) && $data->social_id == $social->id) selected @endif>
+                                            {{ $social->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input type="text" name="socialDescription[]" value="{{ $data->description ?? '' }}" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                                <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                            </div>
+                    @endforeach
+                    @else
+                        <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <select name="socialId[]"  style="flex: 1; padding: 8px;">
+                                <option value="">स्थान चुनें</option>
+                                @foreach($social_media as $social)
+                                    <option value="{{ $social->id }}">{{ $social->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" name="socialDescription[]" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                            <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                        </div>
+                    @endif
                 </div>
+        
+                <!-- Add Button -->
+                {{-- <button type="button" id="addSocialMedia" style="padding: 10px; background-color: green; color: white; border: none; cursor: pointer; margin-top: 10px;">+</button> --}}
             </div>
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
@@ -298,6 +291,137 @@
 </div>
 
 <script>
+      function toggleTaglineField() {
+        const taglineField = document.getElementById('taglineField');
+        taglineField.style.display = taglineField.style.display === 'none' ? 'block' : 'none';
+    }
+
+    document.getElementById('add-day-btn').addEventListener('click', () => {
+    const container = document.getElementById('schedule-container');
+    const firstSchedule = container.querySelector('.day-schedule');
+
+    if (firstSchedule) {
+        // Clone an existing schedule
+        const newSchedule = firstSchedule.cloneNode(true);
+
+        // Reset values for cloned inputs
+        newSchedule.querySelectorAll('select, input').forEach(input => {
+            if (input.type === 'checkbox') {
+                input.checked = false;
+            } else {
+                input.value = '';
+                input.disabled = false;
+            }
+        });
+
+        // Hide second slot in the new schedule
+        newSchedule.querySelector('.second-time-slot').style.display = 'none';
+
+        // Append new schedule
+        container.appendChild(newSchedule);
+    } else {
+        // Create a new schedule if none exist
+        const newSchedule = document.createElement('div');
+        newSchedule.classList.add('day-schedule');
+
+        newSchedule.innerHTML = `
+            <select name="day[]" class="day-select">
+                <option value="">-- दिन चुनें --</option>
+                <option value="monday">सोमवार</option>
+                <option value="tuesday">मंगलवार</option>
+                <option value="wednesday">बुधवार</option>
+                <option value="thursday">गुरुवार</option>
+                <option value="friday">शुक्रवार</option>
+                <option value="saturday">शनिवार</option>
+                <option value="sunday">रविवार</option>
+            </select>
+            <input type="time" name="open_time[]" class="time-input">
+            <label>to</label>
+            <input type="time" name="close_time[]" class="time-input">
+         
+            <label>
+                <input type="checkbox" class="add-2nd-slot"> दूसरा स्लॉट जोड़ें
+            </label>
+            <button type="button" class="remove-day-btn">&#x2716;</button>
+            
+            <!-- Second Time Slot -->
+            <div class="second-time-slot" style="display: none; margin-top: 10px;">
+                <input type="time" name="open_time_2[]" class="time-input">
+                <label>to</label>
+                <input type="time" name="close_time_2[]" class="time-input">
+            </div>
+        `;
+
+        container.appendChild(newSchedule);
+    }
+});
+
+// Handle 24-hour checkbox toggle
+document.addEventListener('change', (e) => {
+    if (e.target.classList.contains('is-24-hours')) {
+        const parent = e.target.closest('.day-schedule');
+        parent.querySelectorAll('.time-input').forEach(input => {
+            input.disabled = e.target.checked;
+        });
+    }
+});
+
+// Show or hide the second time slot
+document.addEventListener('change', (e) => {
+    if (e.target.classList.contains('add-2nd-slot')) {
+        const parent = e.target.closest('.day-schedule');
+        const secondSlot = parent.querySelector('.second-time-slot');
+        secondSlot.style.display = e.target.checked ? 'block' : 'none';
+    }
+});
+
+// Remove a day schedule
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-day-btn')) {
+        e.target.closest('.day-schedule').remove();
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("listingForm").addEventListener("submit", function (event) {
+        document.querySelectorAll('input[name="is_24_hours[]"]').forEach(checkbox => {
+            let hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = checkbox.name; 
+            hiddenInput.value = checkbox.checked ? "yes" : "no";
+            this.appendChild(hiddenInput);
+            checkbox.remove(); 
+        });
+    });
+});
+
+
+// Collect and log schedules
+document.getElementById('submit-btn')?.addEventListener('click', () => {
+    const schedules = [];
+    document.querySelectorAll('.day-schedule').forEach(schedule => {
+        const day = schedule.querySelector('.day-select').value;
+        const openTime = schedule.querySelector('input[name="open_time[]"]').value;
+        const closeTime = schedule.querySelector('input[name="close_time[]"]').value;
+        const is24Hours = schedule.querySelector('.is-24-hours').checked;
+        let openTime2 = '', closeTime2 = '';
+        const secondSlot = schedule.querySelector('.second-time-slot');
+        if (secondSlot.style.display !== 'none') {
+            openTime2 = secondSlot.querySelector('input[name="open_time_2[]"]').value;
+            closeTime2 = secondSlot.querySelector('input[name="close_time_2[]"]').value;
+        }
+
+        schedules.push({
+            day,
+            openTime: is24Hours ? '24 Hours' : openTime,
+            closeTime: is24Hours ? '24 Hours' : closeTime,
+            is24Hours: is24Hours ? 1 : 0, // Set is_24_hours correctly // added the is24Hours to the object.
+            secondSlot: openTime2 && closeTime2 ? { openTime2, closeTime2 } : null,
+        });
+    });
+
+    console.log(schedules);
+});
+
    function toggleMenu() {
     const menu = document.querySelector('.navmenu ul');
     menu.classList.toggle('show');
@@ -334,6 +458,71 @@ document.addEventListener('click', function(event) {
             item.querySelector('.dropdown-icon').classList.remove('show');
         });
     }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // Add new social media row
+    document.getElementById("addSocialMedia").addEventListener("click", function() {
+        let container = document.getElementById("social-media-container");
+        console.log(container);
+        let newRow = document.createElement("div");
+        newRow.classList.add("social-media-row");
+        newRow.style.display = "flex";
+        newRow.style.alignItems = "center";
+        newRow.style.gap = "10px";
+        newRow.style.marginBottom = "10px";
+
+        let select = document.createElement("select");
+        select.name = "socialId[]";
+        // select.required = true;
+        select.style.flex = "1";
+        select.style.padding = "8px";
+
+        let defaultOption = document.createElement("option");
+        defaultOption.text = "स्थान चुनें";
+        defaultOption.value = "";
+        select.appendChild(defaultOption);
+
+        let socialMediaData = @json($social_media); // Convert Blade variable to JS array
+
+        socialMediaData.forEach(function(social) {
+            let option = document.createElement("option");
+            option.value = social.id;
+            option.text = social.name;
+            select.appendChild(option);
+        });
+
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "socialDescription[]";
+        input.placeholder = "अपना लिंक या विवरण दर्ज करें";
+        input.style.flex = "2";
+        input.style.padding = "8px";
+
+        let removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.textContent = "-";
+        removeButton.style.padding = "10px";
+        removeButton.style.backgroundColor = "red";
+        removeButton.style.color = "white";
+        removeButton.style.border = "none";
+        removeButton.style.cursor = "pointer";
+
+        removeButton.addEventListener("click", function() {
+            newRow.remove();
+        });
+
+        newRow.appendChild(select);
+        newRow.appendChild(input);
+        newRow.appendChild(removeButton);
+        container.appendChild(newRow);
+    });
+
+    // Attach event listener to remove existing social media rows
+    document.querySelectorAll(".removeSocialMedia").forEach(button => {
+        button.addEventListener("click", function() {
+            this.parentElement.remove();
+        });
+    });
 });
 
 </script>

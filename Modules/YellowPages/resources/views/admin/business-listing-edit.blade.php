@@ -77,32 +77,16 @@
                     <input type="text" id="businessName" name="businessName" class="form-control" value="{{ old('business_name', $listing->business_name) }}" placeholder="Enter business name">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="businessAddress" class="form-label">व्यवसाय/कंपनी का पता</label>
-                    <input type="text" id="businessAddress" name="businessAddress" class="form-control" value="{{ old('business_address', $listing->business_address) }}" placeholder="Enter business address">
+                    <label for="primaryPhone" class="form-label">फ़ोन नंबर</label>
+                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $user->phone) }}" placeholder="Enter primary phone">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="primaryPhone" class="form-label">प्राथमिक फ़ोन नंबर</label>
-                    <input type="text" id="primaryPhone" name="primaryPhone" class="form-control" value="{{ old('primary_phone', $listing->primary_phone) }}" placeholder="Enter primary phone">
+                    <label for="primaryContact" class="form-label">संपर्क नाम</label>
+                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $user->name) }}"placeholder="Enter primary contact name">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="secondaryPhone" class="form-label">द्वितीय फ़ोन नंबर</label>
-                    <input type="text" id="secondaryPhone" name="secondary_phone" class="form-control" value="{{ old('secondary_phone', $listing->secondary_phone) }}" placeholder="Enter secondary phone">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="primaryContact" class="form-label">प्राथमिक संपर्क नाम</label>
-                    <input type="text" id="primaryContact" name="primaryContact" class="form-control" value="{{ old('primary_contact_name', $listing->primary_contact_name) }}"placeholder="Enter primary contact name">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="primaryEmail" class="form-label">प्राथमिक संपर्क ईमेल</label>
-                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $listing->primary_contact_email) }}" placeholder="Enter primary email">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="secondaryContact" class="form-label">द्वितीयक संपर्क नाम</label>
-                    <input type="text" id="secondaryContact" name="secondaryContactName" class="form-control" value="{{ old('secondary_contact_name', $listing->secondary_contact_name) }}" placeholder="Enter secondary contact name">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="secondaryEmail" class="form-label">द्वितीयक संपर्क ईमेल</label>
-                    <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control"  value="{{ old('secondary_contact_email', $listing->secondary_contact_email) }}" placeholder="Enter secondary email">
+                    <label for="primaryEmail" class="form-label">ईमेल</label>
+                    <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" value="{{ old('primary_contact_email', $user->email) }}" placeholder="Enter primary email">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="businessType" class="form-label">व्यवसाय/कंपनी कानूनी प्रकार *</label>
@@ -165,17 +149,6 @@
                     </select>
                 </div>
             </div>
-        <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
-            <h5 style="margin-bottom: 15px;">पता विवरण</h5>
-        <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
-            <div style="display: flex; gap: 20px;">
-                <!-- Pin Code Field -->
-                <div style="flex: 1;">
-                    <label for="pincode" class="form-label">पिन कोड</label>
-                    <input type="text" id="pincode" name="pincode" class="form-control" value="{{ old('primary_contact_email', $listing->pincode) }}" placeholder="Enter Pin Code">
-                </div>
-            </div>
-        </div>
         <br>
         <br>
         <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
@@ -202,12 +175,8 @@
             <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
             <div style="margin-top: 15px;">
                 <label for="description">विवरण</label>
-                <textarea id="description" name="description" rows="4" value="{{ old('description', $listing->description) }}" placeholder="Enter description here..." style="width: 100%;"></textarea>
-            </div>
-            <div style="margin-top: 15px;">
-                <label for="description">टैग या कीवर्ड (अल्पविराम से अलग)</label>
-                <textarea id="description" name="tags_keywords" rows="4" placeholder="Enter Tags or Keywords (Comma Separated)"  value="{{ old('tags', $listing->tags_keywords) }}" style="width: 100%;"></textarea>
-            </div>
+                <textarea id="description" name="description" rows="4" placeholder="Enter description here..." style="width: 100%;">{{ old('description', $listing->description) }}</textarea>
+            </div>    
         </div>
             <br>
             <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd; font-family: Arial, sans-serif;">
@@ -248,10 +217,10 @@
             
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
-                <h5 style="margin-bottom: 15px;">पते की जानकारी</h5>
+                <h5 style="margin-bottom: 15px;">व्यवसाय/कंपनी का पता</h5>
                 <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
                 <div style="margin-bottom: 10px;">
-                    <label for="street_address">Full Address:</label>
+                    <label for="street_address">व्यवसाय/कंपनी का पता:</label>
                     <input type="text" id="street_address" name="fullAddress"  value="{{ old('primary_contact_email', $listing->full_address) }}" placeholder="123 Main St" style="width: 100%; padding: 8px;">
                 </div>
                
@@ -261,35 +230,43 @@
                     <label for="website">वेबसाइट:</label>
                     <input type="url" id="website" name="website" value="{{ old('primary_contact_email', $listing->website) }}" placeholder="https://example.com" style="width: 100%; padding: 8px;">
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <label for="phone">फ़ोन:</label>
-                    <input type="tel" id="phone" name="phone" value="{{ old('primary_contact_email', $listing->phone) }}" placeholder="+1 234 567 8900" style="width: 100%; padding: 8px;">
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <label for="whatsapp">व्हाट्सएप:</label>
-                    <input type="tel" id="whatsapp" name="whatsapp" value="{{ old('primary_contact_email', $listing->whatsapp) }}"  placeholder="+1 234 567 8900" style="width: 100%; padding: 8px;">
-                </div>
             </div>
             <br>
-            <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
+            <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
                 <h5 style="margin-bottom: 15px;">सोशल मीडिया लिंक</h5>
                 <div style="border-bottom: 2px solid #000; margin-bottom: 15px;"></div>
-                <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <select id="social_media" name="socialId" required style="flex: 1; padding: 8px;">
-                    <option selected>Select location</option>
-                            @foreach($social_media as $social)
-                            <option value="{{ $social->id }}" 
-                                {{ (old('advertising_medium_id', $listing->social_id) == $social->id) ? 'selected' : '' }}>
-                                {{ $social->name }}
-                    </option>
-                            @endforeach
-                    </select>
-                    <input type="text" id="description" name="socialDescription" placeholder="Enter your link or details" style="flex: 2; padding: 8px;">
-                    {{-- <button type="button" id="addSocialMedia" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer;">
-                        +
-                    </button> --}}
+            
+                <div id="social-media-container">
+                    @if(!empty($social_media_data) && count($social_media_data) > 0)
+                        @foreach($social_media_data as $data)
+                            <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <select name="socialId[]" style="flex: 1; padding: 8px;">
+                                    <option value="">स्थान चुनें</option>
+                                    @foreach($social_media as $social)
+                                        <option value="{{ $social->id }}" 
+                                            @if(isset($data->social_id) && $data->social_id == $social->id) selected @endif>
+                                            {{ $social->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input type="text" name="socialDescription[]" value="{{ $data->description ?? '' }}" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                                <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                            </div>
+                    @endforeach
+                    @else
+                        <div class="social-media-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <select name="socialId[]"  style="flex: 1; padding: 8px;">
+                                <option value="">स्थान चुनें</option>
+                                @foreach($social_media as $social)
+                                    <option value="{{ $social->id }}">{{ $social->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" name="socialDescription[]" placeholder="अपना लिंक या विवरण दर्ज करें" style="flex: 2; padding: 8px;">
+                            <button type="button" class="removeSocialMedia" style="padding: 10px; background-color: red; color: white; border: none; cursor: pointer;">-</button>
+                        </div>
+                    @endif
                 </div>
-            </div>
+        
             <br>
             <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                 <h5 style="margin-bottom: 15px;">मिडिया</h5>
@@ -298,54 +275,9 @@
                 <input type="file" name="image" style="display: block; margin-top: 10px;">
                 </div>
         
-                <div style="display: flex; gap: 10px; justify-content: space-between; margin-bottom: 10px;">
-                    <div style="flex: 1; padding: 10px; border: 1px solid #ddd; text-align: center;">
-                        <label for="coverImage" class="form-label">कवर छवि</label>
-                        <input type="file" id="coverImage" name="coverImage" class="form-control @error('coverImage') is-invalid @enderror">
-                    </div>
-                    <div style="flex: 1; padding: 10px; border: 1px solid #ddd; text-align: center;">
-                        <label for="logo" class="form-label">प्रतीक चिन्ह</label>
-                        <input type="file" id="logo" name="logo" class="form-control @error('logo') is-invalid @enderror">
-                    </div>
-                </div>
-                <h5 style="margin-top: 20px; margin-bottom: 15px;">विशेषताएँ</h5>
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <label for="featuresToggle" style="font-weight: bold;">विशेषताएँ</label>
-                    <input type="checkbox" id="featuresToggle" style="cursor: pointer;">
-                </div>
-                <div id="faqSection" style="display: none;">
-                    <div class="faq-item" style="margin-bottom: 10px;">
-                        <label>अक्सर पूछे जाने वाले प्रश्नों</label>
-                        <input type="text" name="faq" placeholder="Frequently Asked Questions" style="width: 100%; margin-bottom: 5px;">
-                        <textarea placeholder="Answer" name="answer" style="width: 100%; height: 60px;"></textarea>
-                    </div>
-                    <div class="add-new" style="color: #007bff; cursor: pointer; font-size: 14px; display: inline-block; margin-top: 10px;" onclick="addFAQ()">+ नया जोड़ें</div>
-                </div>                   
+                
             </div>
             <br>
-            {{-- <div style="max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border: 1px solid #ddd;">
-                <div id="signupFields" style="display: flex; gap: 20px; margin-bottom: 15px;">
-                    <div style="flex: 1;">
-                        <label for="signupEmail">साइनअप करने के लिए ईमेल दर्ज करें और लिस्टिंग अनुमोदन पर अधिसूचना प्राप्त करें</label>
-                        <input type="email" id="signupEmail" name="notificationEmail" placeholder="Enter email here..." style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd;">
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="userName">उपयोगकर्ता नाम दर्ज करें</label>
-                        <input type="text" id="userName" name="userName" value="{{ old('user_name', $listing->user_name) }}" placeholder="Enter User Name" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd;">
-                    </div>
-                </div>
-                <div id="accountFields" style="display: none; flex-direction: row; gap: 20px;">
-                    <div style="flex: 1;">
-                        <label for="email">ईमेल</label>
-                        <input type="email" id="email" name="email" value="{{ old('email', $listing->email) }}" placeholder="Enter your email" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd;">
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="password">पासवर्ड</label>
-                        <input type="password" id="password" name="password" value="{{ old('password', $listing->password) }}" placeholder="Enter your password" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd;">
-                    </div>
-                </div>
-            </div> --}}
-
         <!-- Submit Button -->
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-primary">अद्यतन सूची</button>

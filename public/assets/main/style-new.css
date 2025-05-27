@@ -1,0 +1,65 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    width: 500px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal__content {
+    background: #fff;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal__content h1 {
+    color: #4CAF50;
+    font-size: 24px;
+}
+
+.modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+.confetti {
+    position: absolute;
+    animation: confetti-fall 2.5s linear forwards;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    100% { transform: translate(calc(200px * var(--dirX)), calc(-250px * var(--dirY))) rotate(720deg); opacity: 0; }
+}
+
+.confetti.circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.confetti.square {
+    width: 10px;
+    height: 10px;
+}
+
+.confetti.ribbon {
+    width: 16px;
+    height: 5px;
+    border-radius: 2px;
+}

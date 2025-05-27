@@ -1,5 +1,5 @@
 @extends('yellowpages::layout.auth')
-@section('title', 'Prarang WebPage')
+@section('title', 'रजिस्टर - बधाई संदेश')
 @section('content')
 <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
 <style>
@@ -498,6 +498,11 @@ body{
     <div class="flex flex-col md:flex-row relative max-w-md mx-auto rounded-lg shadow-md p-4 bg-white 
                 border border-gray-300 hover:border-indigo-500 transition duration-300 ease-in-out">
         
+        <!-- Logo at the top center -->
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md">
+            <img src="{{ asset('path-to-your-logo.png') }}" alt="Logo" class="w-12 h-12">
+        </div>
+
         <!-- Information Section -->
         <div class="flex-1 space-y-2">
             <h5 class="text-2xl font-bold text-gray-800 mb-2">{{ ucfirst($vcard->name) }} Prarang Page</h5>
@@ -703,3 +708,12 @@ body{
     
   
 @endsection
+
+<!-- Modal Structure -->
+<div class="modal" id="modal">
+    <div class="modal__content">
+        <span class="modal__close" onclick="closeModal()">&times;</span>
+        <h1>🎉 बधाई हो! 🎉</h1>
+        <p>आपका अपना वेबपेज खुल गया है। आप अपनी वेबसाइट को याद रखें या इसे याद रखने के लिए खुद को <strong>WhatsApp</strong> या <strong>SMS</strong> करें।</p>
+    </div>
+</div>

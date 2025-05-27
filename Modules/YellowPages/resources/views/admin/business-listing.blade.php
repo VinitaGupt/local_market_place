@@ -57,9 +57,12 @@
                                     <td class="align-middle">{{ $business->listing_title }}</td> 
                                     <td class="align-middle">{{ $business->business_name }}</td>
                                     <td class="align-middle">{{ $business->business_address }}</td>
-                                    <td class="align-middle">{{ $business->primary_phone }}</td>
-                                    <td class="align-middle">{{ $business->primary_contact_email }}</td>
-                                    <td class="align-middle">{{ $business->pincode }}</td> 
+                                    @php
+                                    $user = $users[$business->user_id] ?? null; // Fetch user by ID, or set null if not found
+                                    @endphp
+                                
+                                    <td class="align-middle">{{ $user ? $user->phone : 'N/A' }}</td>
+                                    <td class="align-middle">{{ $user ? $user->email : 'N/A' }}</td>
                                     <td class="align-middle"> 
                                         <a href="{{ route('admin.listing-edit', $business->id) }}" class="btn btn-sm btn-primary edit-user">संपादन करना</a>
                                         <form action="{{ route('admin.listing-delete', $business->id) }}" method="POST" style="display:inline;">
